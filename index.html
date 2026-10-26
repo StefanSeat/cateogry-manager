@@ -6,49 +6,64 @@
 <title>Eurospin Category Manager Prep</title>
 <meta name="description" content="Interview preparation for the Category Manager role at Eurospin.">
 <style>
+  /* Eurospin palette: navy bar, bright blue hero, yellow accent */
   :root {
-    --bg: #f6f7f9;
+    --navy: #0a3a66;
+    --blue: #005eb8;
+    --yellow: #ffd23f;
+    --bg: #f4f7fb;
     --card: #ffffff;
-    --text: #1d2330;
-    --muted: #5d6677;
-    --line: #e2e5eb;
-    --brand: #0b4ea2;
-    --brand-soft: #e7effa;
-    --accent: #e30613;
-    --accent-soft: #fde8ea;
+    --text: #0d2440;
+    --muted: #55657a;
+    --line: #dde5ef;
+    --brand: #005eb8;
+    --brand-soft: #e5effa;
+    --accent: #0a3a66;
+    --accent-soft: #fff6d6;
     --ok: #1f8a4c;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #11141a; --card: #1a1f28; --text: #e8ebf1; --muted: #9aa3b4; --line: #2a313d;
-      --brand: #6ea6ff; --brand-soft: #1b2a42; --accent: #ff5a64; --accent-soft: #3a1c20; --ok: #4cc27f;
+      --bg: #0b1626; --card: #13233a; --text: #e8eef6; --muted: #9fb0c6; --line: #22364f;
+      --brand: #5aa3f0; --brand-soft: #16304f; --accent: #ffd23f; --accent-soft: #2e2a15; --ok: #4cc27f;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #11141a; --card: #1a1f28; --text: #e8ebf1; --muted: #9aa3b4; --line: #2a313d;
-    --brand: #6ea6ff; --brand-soft: #1b2a42; --accent: #ff5a64; --accent-soft: #3a1c20; --ok: #4cc27f;
+    --bg: #0b1626; --card: #13233a; --text: #e8eef6; --muted: #9fb0c6; --line: #22364f;
+    --brand: #5aa3f0; --brand-soft: #16304f; --accent: #ffd23f; --accent-soft: #2e2a15; --ok: #4cc27f;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0; background: var(--bg); color: var(--text);
-    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font: 16px/1.6 "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
+  h1, h2, h3 { font-weight: 600; }
+  .topbar { background: var(--navy); color: #fff; }
+  .topbar .wrap { display: flex; align-items: center; gap: 12px; padding: 14px 16px; }
+  .logo { width: 44px; height: 44px; border-radius: 8px; background: var(--blue); border: 2px solid #fff;
+          display: grid; place-items: center; text-align: center; line-height: 1; font-weight: 700; flex: none; }
+  .logo span { display: block; font-size: .55rem; letter-spacing: .05em; }
+  .logo b { display: block; color: var(--yellow); font-size: .85rem; }
+  .topbar .name { font-weight: 500; }
   header.hero {
-    background: linear-gradient(135deg, var(--brand), #083a7a);
-    color: #fff; padding: 48px 16px 40px;
+    background: var(--blue); color: #fff; padding: 56px 0 48px; position: relative; overflow: hidden;
   }
+  header.hero::after {
+    content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px;
+    background: var(--yellow); transform: rotate(45deg);
+  }
+  .hero .wrap { position: relative; z-index: 1; }
   .wrap { max-width: 920px; margin: 0 auto; padding: 0 16px; }
-  .hero .wrap { padding: 0; }
-  .hero h1 { margin: 0 0 8px; font-size: clamp(1.7rem, 4vw, 2.4rem); line-height: 1.2; }
-  .hero p { margin: 0; opacity: .9; max-width: 640px; }
-  .tag { display: inline-block; background: var(--accent); color: #fff; font-size: .78rem; font-weight: 700;
+  .hero h1 { margin: 0 0 10px; font-size: clamp(1.9rem, 5vw, 3rem); line-height: 1.15; }
+  .hero p { margin: 0; opacity: .95; max-width: 640px; font-size: 1.05rem; }
+  .tag { display: inline-block; background: var(--yellow); color: var(--navy); font-size: .78rem; font-weight: 700;
          letter-spacing: .04em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; margin-bottom: 14px; }
   nav.toc { position: sticky; top: 0; z-index: 5; background: var(--card); border-bottom: 1px solid var(--line); }
   nav.toc .wrap { display: flex; gap: 6px; overflow-x: auto; padding: 10px 16px; scrollbar-width: none; }
   nav.toc a { white-space: nowrap; text-decoration: none; color: var(--muted); font-size: .9rem;
               padding: 6px 12px; border-radius: 99px; }
   nav.toc a:hover { background: var(--brand-soft); color: var(--brand); }
-  section { padding: 36px 0 8px; }
+  section { padding: 36px 0 8px; scroll-margin-top: 50px; }
   h2 { font-size: 1.45rem; margin: 0 0 6px; }
   h2 + .lead { color: var(--muted); margin: 0 0 18px; }
   h3 { margin: 0 0 6px; font-size: 1.05rem; }
@@ -77,8 +92,16 @@
   details.q .a { padding: 0 16px 14px 40px; }
   details.q .a p { margin: 6px 0; }
   .pill { display: inline-block; font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 99px;
-          background: var(--accent-soft); color: var(--accent); margin-left: auto; flex: none; align-self: center; }
-  .callout { background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: 8px; padding: 14px 16px; margin-top: 14px; }
+          background: var(--brand-soft); color: var(--brand); margin-left: auto; flex: none; align-self: center; }
+  .callout { background: var(--accent-soft); border-left: 4px solid var(--yellow); border-radius: 8px; padding: 14px 16px; margin-top: 14px; }
+  .star { display: grid; gap: 8px; margin-top: 8px; }
+  .star div { border-left: 3px solid var(--brand); padding: 2px 0 2px 12px; }
+  .star b { color: var(--brand); }
+  .num { font-weight: 700; color: var(--brand); white-space: nowrap; }
+  .card .label { display: inline-block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+                 color: var(--navy); background: var(--yellow); padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; }
+  .stack { display: grid; gap: 14px; }
+  .quote { font-style: italic; background: var(--brand-soft); border-radius: 8px; padding: 10px 14px; margin-top: 8px; }
   .check { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
   .check label { display: flex; gap: 10px; align-items: flex-start; background: var(--card); border: 1px solid var(--line);
                  border-radius: 10px; padding: 12px 14px; cursor: pointer; }
@@ -86,10 +109,20 @@
   .check input:checked + span { color: var(--muted); text-decoration: line-through; }
   .progress { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; margin: 0 0 14px; }
   .progress div { height: 100%; width: 0; background: var(--ok); transition: width .25s; }
-  footer { padding: 40px 0 48px; color: var(--muted); font-size: .85rem; text-align: center; }
+  footer { margin-top: 40px; padding: 28px 16px; background: var(--navy); color: #cfdcec; font-size: .85rem; text-align: center; }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="logo" aria-hidden="true"><div><span>EURO</span><b>Spin</b></div></div>
+    <div class="name">Category Manager interview prep</div>
+  </div>
+</div>
 
 <header class="hero">
   <div class="wrap">
@@ -106,6 +139,8 @@
     <a href="#process">Category process</a>
     <a href="#kpis">KPIs</a>
     <a href="#questions">Questions</a>
+    <a href="#star">STAR answers</a>
+    <a href="#background">Background</a>
     <a href="#plan">90-day plan</a>
     <a href="#ask">Ask them</a>
     <a href="#checklist">Checklist</a>
@@ -253,11 +288,11 @@
     </div></details>
 
     <details class="q"><summary>Tell me about a difficult negotiation.<span class="pill">STAR</span></summary><div class="a">
-      <p>Prepare one real story with a number in the result. Show that you prepared (data, alternatives), stayed calm, and found a deal where both sides got something. End with what you learned.</p>
+      <p>Use the Maxi price-indexing story or the open-book costing approach from <a href="#star">STAR answers</a>. Show that you prepared (data, alternatives), stayed calm, and found a deal where both sides got something.</p>
     </div></details>
 
     <details class="q"><summary>Tell me about a decision you made with data.<span class="pill">STAR</span></summary><div class="a">
-      <p>Pick a case where the data pointed against the first opinion. Say which data, what you concluded, what you did, and the measurable result.</p>
+      <p>Use the Glovo slow-mover audit: 62 SKUs flagged, waste down from 2.8% to 1.7%, in-stock above 92.5%. Say which data, what you concluded, what you did, and the result.</p>
     </div></details>
 
     <details class="q"><summary>What would you change in a Eurospin store you visited?<span class="pill">Store visit</span></summary><div class="a">
@@ -267,6 +302,78 @@
     <details class="q"><summary>Where do you see yourself in 3 to 5 years?<span class="pill">Motivation</span></summary><div class="a">
       <p>Owning a bigger or more strategic category (for example fresh), with proven results in margin and private label growth, and possibly leading a small team. Keep it tied to Eurospin.</p>
     </div></details>
+  </section>
+
+  <section id="star">
+    <h2>High-probability questions and STAR answers</h2>
+    <p class="lead">Built around the job description: product specs and sensory testing, assortment and waste, supplier negotiation, and working with Quality and Marketing.</p>
+    <div class="stack">
+
+      <div class="card">
+        <span class="label">A. Product development and quality specs</span>
+        <p class="muted">The JD asks for defining product specifications and qualitative assessments (sensory, benchmarking).</p>
+        <h3 style="margin-top:10px">"How do you approach developing a new private label product or reformulating an existing spec?"</h3>
+        <ol class="steps" style="margin-top:12px">
+          <li><strong>Market benchmark.</strong> Identify the market leader or A-brand benchmark (for example standardising a 3.2% UHT milk against the national market reference).</li>
+          <li><strong>Product teardown and spec definition.</strong> With Quality, define exact physical and chemical parameters: fat, protein, acidity, shelf-life stability, primary packaging barrier (Tetra Pak vs. HDPE bottle) and pallet configuration for logistics efficiency.</li>
+          <li><strong>Blind sensory assessment.</strong> Panel tests against the benchmark (taste, texture, aroma, appearance). Eurospin PL must score equal to or higher than the benchmark at a clearly lower retail price.</li>
+          <li><strong>Packaging and compliance.</strong> With Marketing and Quality: clear labelling, allergen tracking, and shelf-ready packaging (SRP) that cuts store replenishment labour.</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <span class="label">B. Assortment rationalisation and waste</span>
+        <p class="muted">The JD stresses category analysis, assortment management and profitability.</p>
+        <h3 style="margin-top:10px">"How do you handle underperforming products in a high-turnover category?"</h3>
+        <p class="muted">Use your Glovo numbers.</p>
+        <div class="star">
+          <div><b>Situation.</b> I managed an assortment where dead stock locked up working capital and pulled category margin down.</div>
+          <div><b>Action.</b> I ran systematic slow-mover audits and flagged <span class="num">62</span> zero and slow-moving SKUs for targeted <span class="num">30%</span> delisting promotions, clearing stock without brand damage. Zero-movers dropped from <span class="num">10.32%</span> to <span class="num">9.66%</span>.</div>
+          <div><b>Result.</b> Food waste fell from <span class="num">2.8%</span> to <span class="num">1.7%</span>, while in-stock rate stayed above <span class="num">92.5%</span>.</div>
+          <div><b>Eurospin link.</b> In hard discount a dead SKU is unacceptable because shelf space is scarce. Every SKU must earn its linear metre.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="label">C. Supplier selection and negotiation</span>
+        <p class="muted">The JD highlights supplier evaluation, commercial terms and price competitiveness.</p>
+        <h3 style="margin-top:10px">"How do you negotiate with suppliers when you buy private label rather than brands?"</h3>
+        <div class="star">
+          <div><b>Open-book costing.</b> I don't negotiate list prices. I break unit economics into raw materials (for example raw milk price indexes), processing, packaging and logistics.</div>
+          <div><b>Volume leverage.</b> Trade scale and simplicity for cost.
+            <div class="quote">"Eurospin offers high, predictable volumes, fast pallet-in/pallet-out logistics and zero marketing spend for the co-packer. In exchange, we expect baseline production costs."</div>
+          </div>
+          <div><b>Price indexing example.</b> I price-matched <span class="num">236</span> top products against market leaders (like Maxi). I found <span class="num">96</span> products priced unnecessarily low versus willingness to pay, raised them, and lifted category margin from <span class="num">30.85%</span> to <span class="num">31.22%</span> with no drop in unit velocity.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="label">D. Commercial vs. Quality conflict</span>
+        <p class="muted">The JD specifies close work with Quality and Marketing.</p>
+        <h3 style="margin-top:10px">"A supplier offers 6% cost reduction on a high-volume product, but it needs an ingredient swap that slightly changes the taste or cuts shelf life by 5 days. What do you do?"</h3>
+        <div class="star">
+          <div><b>Protect trust.</b> Reject a short-term margin gain if it damages the brand. In hard discount, loyalty rests entirely on private label quality.</div>
+          <div><b>Check the real cost.</b> With Quality, assess whether shorter shelf life raises store shrinkage. Spoilage can easily wipe out a 6% purchase discount.</div>
+          <div><b>Test it.</b> Run a controlled blind sensory panel. If shoppers notice a drop in quality, decline, or push the supplier to find savings in packaging or logistics instead of the recipe.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="background">
+    <h2>Addressing the background requirement</h2>
+    <p class="lead">Pick the version that fits your degree and say it with confidence.</p>
+    <div class="grid">
+      <div class="card">
+        <span class="label">Food science / technology degree</span>
+        <p>Say it straight away. Position yourself as the ideal hybrid: you understand food chemistry, preservation, HACCP and nutrition tables, and you bring hard P&amp;L commercial experience.</p>
+      </div>
+      <div class="card">
+        <span class="label">Economics / business degree</span>
+        <div class="quote">"My core expertise is commercial P&amp;L management, category elasticity and supplier negotiation. For product development I work in lockstep with Quality and lab specialists, turning technical food specs into commercially viable, high-volume products."</div>
+      </div>
+    </div>
   </section>
 
   <section id="plan">
@@ -295,9 +402,12 @@
   </section>
 
   <section id="ask">
-    <h2>Questions to ask them</h2>
+    <h2>High-impact questions to ask them</h2>
     <p class="lead">Pick 3 or 4. They show you think about the business, not just the job.</p>
     <div class="card"><ul>
+      <li>How does the sensory and benchmarking process work today: who runs the panels, and how often are existing specs reviewed against the A-brand?</li>
+      <li>When a supplier pushes a cost increase, how much room does the category manager have before it goes to headquarters?</li>
+      <li>How do you measure waste and shrinkage per category, and is it part of the category manager's targets?</li>
       <li>Which categories would I manage, and what is their role in the strategy (traffic, margin, growth)?</li>
       <li>How are buying decisions split between the local team and headquarters in Italy?</li>
       <li>How much of the range in this market is sourced locally versus from the central Italian range?</li>
