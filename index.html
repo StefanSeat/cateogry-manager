@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eurospin Category Manager Prep</title>
+<meta name="description" content="Interview preparation for the Category Manager role at Eurospin.">
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --text: #1d2330;
+    --muted: #5d6677;
+    --line: #e2e5eb;
+    --brand: #0b4ea2;
+    --brand-soft: #e7effa;
+    --accent: #e30613;
+    --accent-soft: #fde8ea;
+    --ok: #1f8a4c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #11141a; --card: #1a1f28; --text: #e8ebf1; --muted: #9aa3b4; --line: #2a313d;
+      --brand: #6ea6ff; --brand-soft: #1b2a42; --accent: #ff5a64; --accent-soft: #3a1c20; --ok: #4cc27f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #11141a; --card: #1a1f28; --text: #e8ebf1; --muted: #9aa3b4; --line: #2a313d;
+    --brand: #6ea6ff; --brand-soft: #1b2a42; --accent: #ff5a64; --accent-soft: #3a1c20; --ok: #4cc27f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header.hero {
+    background: linear-gradient(135deg, var(--brand), #083a7a);
+    color: #fff; padding: 48px 16px 40px;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 16px; }
+  .hero .wrap { padding: 0; }
+  .hero h1 { margin: 0 0 8px; font-size: clamp(1.7rem, 4vw, 2.4rem); line-height: 1.2; }
+  .hero p { margin: 0; opacity: .9; max-width: 640px; }
+  .tag { display: inline-block; background: var(--accent); color: #fff; font-size: .78rem; font-weight: 700;
+         letter-spacing: .04em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; margin-bottom: 14px; }
+  nav.toc { position: sticky; top: 0; z-index: 5; background: var(--card); border-bottom: 1px solid var(--line); }
+  nav.toc .wrap { display: flex; gap: 6px; overflow-x: auto; padding: 10px 16px; scrollbar-width: none; }
+  nav.toc a { white-space: nowrap; text-decoration: none; color: var(--muted); font-size: .9rem;
+              padding: 6px 12px; border-radius: 99px; }
+  nav.toc a:hover { background: var(--brand-soft); color: var(--brand); }
+  section { padding: 36px 0 8px; }
+  h2 { font-size: 1.45rem; margin: 0 0 6px; }
+  h2 + .lead { color: var(--muted); margin: 0 0 18px; }
+  h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+  .card p, .card ul { margin: 6px 0 0; }
+  .card ul { padding-left: 18px; }
+  .card li { margin: 3px 0; }
+  .stat { font-size: 1.6rem; font-weight: 800; color: var(--brand); line-height: 1.1; }
+  .muted { color: var(--muted); font-size: .9rem; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .steps li { counter-increment: s; background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+              padding: 14px 16px 14px 58px; position: relative; }
+  .steps li::before { content: counter(s); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+              border-radius: 50%; background: var(--brand); color: #fff; font-weight: 700; display: grid; place-items: center; font-size: .9rem; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: .95rem; }
+  th { background: var(--brand-soft); color: var(--brand); font-size: .85rem; text-transform: uppercase; letter-spacing: .03em; }
+  tr:last-child td { border-bottom: 0; }
+  .table-wrap { overflow-x: auto; border-radius: 12px; }
+  details.q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px; }
+  details.q summary { cursor: pointer; padding: 14px 16px; font-weight: 600; list-style: none; display: flex; gap: 10px; }
+  details.q summary::-webkit-details-marker { display: none; }
+  details.q summary::before { content: "+"; color: var(--brand); font-weight: 800; width: 14px; flex: none; }
+  details.q[open] summary::before { content: "\2212"; }
+  details.q .a { padding: 0 16px 14px 40px; }
+  details.q .a p { margin: 6px 0; }
+  .pill { display: inline-block; font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 99px;
+          background: var(--accent-soft); color: var(--accent); margin-left: auto; flex: none; align-self: center; }
+  .callout { background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: 8px; padding: 14px 16px; margin-top: 14px; }
+  .check { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .check label { display: flex; gap: 10px; align-items: flex-start; background: var(--card); border: 1px solid var(--line);
+                 border-radius: 10px; padding: 12px 14px; cursor: pointer; }
+  .check input { margin-top: 4px; accent-color: var(--ok); width: 18px; height: 18px; flex: none; }
+  .check input:checked + span { color: var(--muted); text-decoration: line-through; }
+  .progress { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; margin: 0 0 14px; }
+  .progress div { height: 100%; width: 0; background: var(--ok); transition: width .25s; }
+  footer { padding: 40px 0 48px; color: var(--muted); font-size: .85rem; text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="tag">Interview prep</span>
+    <h1>Category Manager at Eurospin</h1>
+    <p>Everything in one place: the company, how a discounter thinks about categories, the numbers to know, likely questions with answer outlines, and a plan for the first 90 days.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#company">Company</a>
+    <a href="#role">The role</a>
+    <a href="#process">Category process</a>
+    <a href="#kpis">KPIs</a>
+    <a href="#questions">Questions</a>
+    <a href="#plan">90-day plan</a>
+    <a href="#ask">Ask them</a>
+    <a href="#checklist">Checklist</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="company">
+    <h2>Know the company</h2>
+    <p class="lead">Eurospin is an Italian discount supermarket chain built on a short assortment and a strong private label. Check the latest figures on the official site before the interview.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="stat">1993</div>
+        <p>Founded in Italy (headquartered in San Martino Buon Albergo, Verona) by a group of retail families.</p>
+      </div>
+      <div class="card">
+        <div class="stat">1,300+</div>
+        <p>Stores, mostly in Italy, plus Slovenia, Croatia and Malta. One of the largest discounters in Italy.</p>
+      </div>
+      <div class="card">
+        <div class="stat">~80%</div>
+        <p>Rough share of private label in the assortment. Own brands are the core of the model, not an add-on.</p>
+      </div>
+      <div class="card">
+        <div class="stat">"La spesa intelligente"</div>
+        <p>The slogan: smart shopping. Quality at a low price, with Italian origin as a big part of the story.</p>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:14px">
+      <div class="card">
+        <h3>How the model makes money</h3>
+        <ul>
+          <li>Limited assortment (a few thousand SKUs vs. 15,000+ in a classic supermarket)</li>
+          <li>High volume per SKU, so strong buying power per item</li>
+          <li>Private label with direct producer relationships</li>
+          <li>Lean stores: simple layout, shelf-ready packaging, low operating cost</li>
+          <li>Weekly non-food and promo flyer to drive traffic</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Competitors to mention</h3>
+        <ul>
+          <li><strong>Lidl</strong>: the main discount rival in every Eurospin market</li>
+          <li><strong>Aldi</strong> (Hofer in Slovenia): strong in Slovenia</li>
+          <li><strong>MD Discount, Penny, Todis</strong>: in Italy</li>
+          <li><strong>Konzum, Spar, Tommy, Mercator</strong>: classic supermarkets in Croatia and Slovenia</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Private label brands</h3>
+        <p>Eurospin runs many own brands across categories (fresh, dairy, bakery, drinks, household, personal care, pet). Walk a store before the interview and note 5 to 10 of them, with prices.</p>
+      </div>
+    </div>
+    <div class="callout"><strong>Do this before the interview:</strong> visit one Eurospin and one Lidl. Compare 10 basket items (milk, pasta, olive oil, coffee, eggs, chicken, yogurt, detergent, beer, chocolate) on price, pack size, shelf presentation and availability. Bring those notes.</div>
+  </section>
+
+  <section id="role">
+    <h2>The role</h2>
+    <p class="lead">At a discounter the category manager is mostly a buyer and a P&amp;L owner. Fewer SKUs means every listing decision matters more.</p>
+    <div class="grid">
+      <div class="card"><h3>Assortment</h3><p>Decide what is on the shelf. Add, delist, replace. Keep the range short and clear: usually one or two options per need.</p></div>
+      <div class="card"><h3>Suppliers and negotiation</h3><p>Tenders for private label, annual price talks, cost increases, payment terms, logistics conditions, quality specs.</p></div>
+      <div class="card"><h3>Pricing</h3><p>Hold price leadership versus Lidl and the market on key value items. Protect margin on the rest.</p></div>
+      <div class="card"><h3>Promotions</h3><p>Plan the flyer, special buys and seasonal items (Christmas, Easter, summer, back to school).</p></div>
+      <div class="card"><h3>Private label development</h3><p>Brief new products, test them, benchmark against the brand leader, follow quality controls.</p></div>
+      <div class="card"><h3>Performance</h3><p>Weekly sales, margin, stock, waste. Act fast on what is not working.</p></div>
+    </div>
+  </section>
+
+  <section id="process">
+    <h2>Category management process</h2>
+    <p class="lead">The classic 8 steps. Good structure for any "how would you manage category X" question.</p>
+    <ol class="steps">
+      <li><strong>Define the category.</strong> What need does it cover, from the shopper's point of view? (Example: "breakfast" vs. just "cereals")</li>
+      <li><strong>Give it a role.</strong> Destination, routine, seasonal or convenience. In a discounter most core food is "routine", and price-sensitive items are traffic builders.</li>
+      <li><strong>Assess it.</strong> Sales, margin, market share, trends, competitor ranges and prices, shopper data.</li>
+      <li><strong>Set a scorecard.</strong> Concrete targets: sales growth, gross margin %, availability, waste %, stock days.</li>
+      <li><strong>Pick a strategy.</strong> Traffic, transactions (basket size), profit, cash, image, excitement.</li>
+      <li><strong>Choose tactics.</strong> Assortment, pricing, promotion, shelf layout, supply chain.</li>
+      <li><strong>Implement.</strong> Listings, supplier agreements, planograms, store communication.</li>
+      <li><strong>Review.</strong> Measure against the scorecard, adjust, repeat.</li>
+    </ol>
+  </section>
+
+  <section id="kpis">
+    <h2>KPIs and formulas</h2>
+    <p class="lead">Expect at least one numbers question. Know these cold.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>KPI</th><th>Formula</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td>Gross margin %</td><td>(Sales − COGS) / Sales</td><td>Main profitability measure of a category</td></tr>
+        <tr><td>Markup %</td><td>(Price − Cost) / Cost</td><td>Not the same as margin. 25% markup = 20% margin</td></tr>
+        <tr><td>Sales per SKU</td><td>Category sales / number of SKUs</td><td>Shows whether the range is too wide</td></tr>
+        <tr><td>Stock turnover</td><td>COGS / average stock</td><td>Discounters need high rotation</td></tr>
+        <tr><td>Days of stock</td><td>Average stock / daily COGS</td><td>Cash tied up and freshness risk</td></tr>
+        <tr><td>GMROI</td><td>Gross margin / average stock at cost</td><td>Profit per unit of money invested in stock</td></tr>
+        <tr><td>Waste / shrinkage %</td><td>Losses / sales</td><td>Critical in fresh (fruit and veg, bakery, meat)</td></tr>
+        <tr><td>Availability (OSA)</td><td>% of time the product is on the shelf</td><td>Empty shelf = lost sale, and a lost customer at a discounter</td></tr>
+        <tr><td>Promo uplift</td><td>Promo sales − baseline sales</td><td>Was the promo worth the margin you gave away?</td></tr>
+        <tr><td>Price index</td><td>Our price / competitor price × 100</td><td>Below 100 on key value items versus Lidl</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="callout"><strong>Quick practice:</strong> a product costs 1.60 and sells for 2.00 net of VAT. Margin = 0.40 / 2.00 = 20%. Markup = 0.40 / 1.60 = 25%. Supplier asks for +8% on cost: new cost 1.728. To keep 20% margin the price goes to 2.16. If you hold 2.00 the margin drops to 13.6%.</div>
+  </section>
+
+  <section id="questions">
+    <h2>Likely questions</h2>
+    <p class="lead">Tap a question for an answer outline. Use STAR for experience questions: Situation, Task, Action, Result (with a number).</p>
+
+    <details class="q"><summary>Why Eurospin?<span class="pill">Motivation</span></summary><div class="a">
+      <p>Combine three things: the discount model (efficiency, every SKU counts, you see your impact fast), private label (you shape the product, not just buy it), and growth (the chain keeps opening stores outside Italy).</p>
+      <p>Add something personal: you shop there, you noticed a specific product or price you liked.</p>
+    </div></details>
+
+    <details class="q"><summary>What does a category manager do, in your words?<span class="pill">Basics</span></summary><div class="a">
+      <p>Runs a category like a small business: decides the range, buys it at the best conditions, sets the price and promo plan, and is responsible for sales, margin and stock. At a discounter, with a short range and a lot of private label, it is closer to "product owner and buyer" than at a classic retailer.</p>
+    </div></details>
+
+    <details class="q"><summary>A supplier wants a 10% price increase. What do you do?<span class="pill">Negotiation</span></summary><div class="a">
+      <p>1) Ask for the cost breakdown and check it against raw material indexes (for example milk, wheat, energy). 2) Know your alternatives: other producers, tender, different spec or pack size. 3) Separate the justified part from the rest. 4) Trade, don't give: if you accept part of it, get something back (longer validity, promo support, payment terms, volume commitment). 5) Calculate the impact on retail price and on the price index versus Lidl before you agree.</p>
+    </div></details>
+
+    <details class="q"><summary>Sales in a category fell 12%. How do you analyse it?<span class="pill">Analysis</span></summary><div class="a">
+      <p>Split the drop: is it the market, or us? Then volume vs. price, then which SKUs and which stores. Check availability (out of stocks), competitor promos and price changes, delistings, seasonality and weather, shelf space changes. Then act on the biggest driver first and set a date to measure again.</p>
+    </div></details>
+
+    <details class="q"><summary>How would you decide which SKU to delist?<span class="pill">Assortment</span></summary><div class="a">
+      <p>Rank by sales, margin contribution and rotation. Then check whether it is unique: if customers would switch to another item in the range (high transferability), delist it. If it is the only answer to a need, or brings people into the store, keep it even with low numbers. Watch out for items that support a basket (for example a specific spice for a popular dish).</p>
+    </div></details>
+
+    <details class="q"><summary>Private label vs. brands: how do you balance them?<span class="pill">Strategy</span></summary><div class="a">
+      <p>At Eurospin private label leads. Brands earn a place when they are a must-have the shopper would walk out for (a few iconic items), or to show price credibility next to the private label. The private label should match the brand leader on quality in blind tests and beat it clearly on price.</p>
+    </div></details>
+
+    <details class="q"><summary>How do you develop a new private label product?<span class="pill">Private label</span></summary><div class="a">
+      <p>Gap in the range or a growing trend, then benchmark the brand leader (spec, price, pack). Write the spec, run a tender with 3 to 5 producers, test samples (blind tasting, lab), agree price and terms, design the pack, launch, then track sales, repeat purchase and complaints for the first 12 weeks.</p>
+    </div></details>
+
+    <details class="q"><summary>How do you know if a promotion worked?<span class="pill">Promo</span></summary><div class="a">
+      <p>Compare to the baseline: incremental units, incremental margin (not just sales), effect on the rest of the category (did it just steal from other SKUs?), sales after the promo (dip from stockpiling), and traffic. A promo that adds sales but loses margin and steals from your own range is not a win.</p>
+    </div></details>
+
+    <details class="q"><summary>Tell me about a difficult negotiation.<span class="pill">STAR</span></summary><div class="a">
+      <p>Prepare one real story with a number in the result. Show that you prepared (data, alternatives), stayed calm, and found a deal where both sides got something. End with what you learned.</p>
+    </div></details>
+
+    <details class="q"><summary>Tell me about a decision you made with data.<span class="pill">STAR</span></summary><div class="a">
+      <p>Pick a case where the data pointed against the first opinion. Say which data, what you concluded, what you did, and the measurable result.</p>
+    </div></details>
+
+    <details class="q"><summary>What would you change in a Eurospin store you visited?<span class="pill">Store visit</span></summary><div class="a">
+      <p>Use your store visit notes. Be constructive: one thing they do well, one or two concrete ideas (for example a gap in the range, a price that is above Lidl, a shelf that was empty). Show you think like the customer and like the P&amp;L owner at the same time.</p>
+    </div></details>
+
+    <details class="q"><summary>Where do you see yourself in 3 to 5 years?<span class="pill">Motivation</span></summary><div class="a">
+      <p>Owning a bigger or more strategic category (for example fresh), with proven results in margin and private label growth, and possibly leading a small team. Keep it tied to Eurospin.</p>
+    </div></details>
+  </section>
+
+  <section id="plan">
+    <h2>30 / 60 / 90 day plan</h2>
+    <p class="lead">If they ask "how would you start?", answer with this.</p>
+    <div class="grid">
+      <div class="card"><h3>First 30 days: learn</h3><ul>
+        <li>Learn the systems, reports and the calendar (promo, negotiations)</li>
+        <li>Meet every key supplier in the category</li>
+        <li>Visit stores and warehouses, talk to store managers</li>
+        <li>Map the category: SKUs, sales, margins, price index</li>
+      </ul></div>
+      <div class="card"><h3>Days 31 to 60: diagnose</h3><ul>
+        <li>Find the weak SKUs and the gaps in the range</li>
+        <li>Check prices versus Lidl and the market</li>
+        <li>Review supplier terms and upcoming cost increases</li>
+        <li>Agree targets with the manager</li>
+      </ul></div>
+      <div class="card"><h3>Days 61 to 90: act</h3><ul>
+        <li>First delistings and new listings</li>
+        <li>One private label improvement or new product brief</li>
+        <li>First negotiations with clear goals</li>
+        <li>Promo plan for the next season</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section id="ask">
+    <h2>Questions to ask them</h2>
+    <p class="lead">Pick 3 or 4. They show you think about the business, not just the job.</p>
+    <div class="card"><ul>
+      <li>Which categories would I manage, and what is their role in the strategy (traffic, margin, growth)?</li>
+      <li>How are buying decisions split between the local team and headquarters in Italy?</li>
+      <li>How much of the range in this market is sourced locally versus from the central Italian range?</li>
+      <li>What KPIs will I be measured on in the first year?</li>
+      <li>What is the biggest challenge in this category right now?</li>
+      <li>How do you work with private label producers on quality control?</li>
+      <li>What does the team look like, and who would I work with most?</li>
+      <li>What does success look like in this role after 12 months?</li>
+    </ul></div>
+  </section>
+
+  <section id="checklist">
+    <h2>Checklist before the interview</h2>
+    <p class="lead">Ticks are saved in this browser.</p>
+    <div class="progress"><div id="bar"></div></div>
+    <ul class="check" id="check">
+      <li><label><input type="checkbox" data-k="store"><span>Visited a Eurospin store and took notes</span></label></li>
+      <li><label><input type="checkbox" data-k="lidl"><span>Compared 10 basket items with Lidl</span></label></li>
+      <li><label><input type="checkbox" data-k="pl"><span>Wrote down 5 to 10 Eurospin private label brands</span></label></li>
+      <li><label><input type="checkbox" data-k="news"><span>Read the latest Eurospin news (new stores, results, campaigns)</span></label></li>
+      <li><label><input type="checkbox" data-k="kpi"><span>Can calculate margin vs. markup without notes</span></label></li>
+      <li><label><input type="checkbox" data-k="star1"><span>STAR story: a negotiation</span></label></li>
+      <li><label><input type="checkbox" data-k="star2"><span>STAR story: a decision made with data</span></label></li>
+      <li><label><input type="checkbox" data-k="star3"><span>STAR story: a mistake and what I learned</span></label></li>
+      <li><label><input type="checkbox" data-k="why"><span>"Why Eurospin" answer ready (under 1 minute)</span></label></li>
+      <li><label><input type="checkbox" data-k="ask"><span>Picked 3 or 4 questions to ask them</span></label></li>
+      <li><label><input type="checkbox" data-k="cv"><span>Printed CV, notebook, pen</span></label></li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>Good luck. Prepared for a Category Manager interview at Eurospin.</footer>
+
+<script>
+  (function () {
+    var boxes = document.querySelectorAll('#check input');
+    var bar = document.getElementById('bar');
+    var state = {};
+    try { state = JSON.parse(localStorage.getItem('eurospin-check') || '{}'); } catch (e) {}
+    function update() {
+      var done = 0;
+      boxes.forEach(function (b) { if (b.checked) done++; });
+      bar.style.width = (done / boxes.length * 100) + '%';
+    }
+    boxes.forEach(function (b) {
+      b.checked = !!state[b.dataset.k];
+      b.addEventListener('change', function () {
+        state[b.dataset.k] = b.checked;
+        try { localStorage.setItem('eurospin-check', JSON.stringify(state)); } catch (e) {}
+        update();
+      });
+    });
+    update();
+  })();
+</script>
+</body>
+</html>
