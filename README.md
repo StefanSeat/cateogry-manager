@@ -11,4 +11,4 @@ Application project for the Account Development Analyst role (Clinical Research 
 
 All leads and companies are fictional and generated with a fixed seed in `js/data.js`.
 
-Live site: https://stefanseat.github.io/cateogry-manager/
+Live site: https://stefanseat.github.io/interview/
