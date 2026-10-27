@@ -215,3 +215,8 @@ details.q .a { padding: 0 14px 12px 36px; }
   border-radius: 8px; padding: 12px; margin: 8px 0 0; }
 
 footer { border-top: 1px solid var(--line); padding: 20px 0 30px; color: var(--muted); font-size: .82rem; }
+
+/* Score guide */
+.guide4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 760px) { .guide4 { grid-template-columns: minmax(0, 1fr); } }
+#score-guide td, #score-guide th { white-space: normal; }

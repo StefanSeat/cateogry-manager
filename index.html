@@ -58,7 +58,7 @@
             <label>Intent <span class="sub">lead source</span><input type="range" name="intent" min="0" max="50" value="25"><output id="w-intent">25</output></label>
             <label>Engagement <span class="sub">recency, email, contacts</span><input type="range" name="engagement" min="0" max="50" value="20"><output id="w-engagement">20</output></label>
           </div>
-          <p class="muted" style="margin-top:10px">Score = weighted average of the four factors, 0 to 100. Emerging biotech with a recent funding round and an active Phase I or II program scores highest on fit, because these sponsors outsource most of their development. An RFI form is the strongest intent signal, a content download the weakest. The score rates the prospect, not the status: a disqualified lead keeps its score but shows "DQ" and leaves the active queue. <button class="btn small" id="w-reset">Reset weights</button></p>
+          <p class="muted" style="margin-top:10px">Score = weighted average of the four factors, 0 to 100. Emerging biotech with a recent funding round and an active Phase I or II program scores highest on fit, because these sponsors outsource most of their development. An RFI form is the strongest intent signal, a content download the weakest. The score rates the prospect, not the status: a disqualified lead keeps its score but shows "DQ" and leaves the active queue. <a href="#score-guide">Full explanation below.</a> <button class="btn small" id="w-reset">Reset weights</button></p>
         </div>
       </details>
 
@@ -84,6 +84,96 @@
         </div>
         <aside class="card detail" id="detail" aria-live="polite"></aside>
       </div>
+    </section>
+    <section class="block" id="score-guide">
+      <h2>How the score works</h2>
+      <p class="lead">Each lead gets four sub-scores from 0 to 100. The sliders above set how much each one counts, and the final score is their weighted average. Here is what each factor means, why it matters for a CRO, and exactly how it is calculated.</p>
+
+      <div class="grid guide4">
+        <div class="card">
+          <span class="label">Company fit</span>
+          <p><b>Question:</b> is this the kind of company that buys CRO services?</p>
+          <p><b>Why it matters:</b> small biotechs have no big internal clinical teams, so they outsource most development to a CRO. Large pharma does more in-house and buys through big framework deals. Universities have small budgets.</p>
+          <div class="table-wrap" style="margin-top:8px"><table>
+            <thead><tr><th>Company type</th><th class="num">Points</th></tr></thead>
+            <tbody>
+              <tr><td>Emerging biotech</td><td class="num">100</td></tr>
+              <tr><td>Mid-size biopharma</td><td class="num">90</td></tr>
+              <tr><td>Large pharma</td><td class="num">60</td></tr>
+              <tr><td>Medical device</td><td class="num">50</td></tr>
+              <tr><td>Academic / NIH</td><td class="num">30</td></tr>
+            </tbody></table></div>
+          <p class="muted">80% company type + 20% region (North America and Europe 100, APAC 80, LATAM 70).</p>
+        </div>
+
+        <div class="card">
+          <span class="label">Pipeline &amp; funding</span>
+          <p><b>Question:</b> do they have a trial coming up, and the money to run it?</p>
+          <p><b>Why it matters:</b> CROs are hired per study. A drug moving from Phase I to Phase II needs a new, bigger trial. A fresh funding round (Series A, B, C or IPO) is usually spent on exactly that, often within 6 to 18 months.</p>
+          <div class="table-wrap" style="margin-top:8px"><table>
+            <thead><tr><th>Trial phase</th><th class="num">Points</th></tr></thead>
+            <tbody>
+              <tr><td>Phase II (efficacy, dose)</td><td class="num">100</td></tr>
+              <tr><td>Phase III (large confirmation)</td><td class="num">90</td></tr>
+              <tr><td>Phase I (first in human)</td><td class="num">80</td></tr>
+              <tr><td>Preclinical (lab, animal)</td><td class="num">50</td></tr>
+            </tbody></table></div>
+          <p class="muted">60% trial phase + 40% funding (raised in the last 12 months 100, no recent round 30).</p>
+        </div>
+
+        <div class="card">
+          <span class="label">Intent</span>
+          <p><b>Question:</b> how strongly did they signal that they want to buy?</p>
+          <p><b>Why it matters:</b> the lead source shows intent. Someone who fills in a request-for-information form is asking for a proposal. Someone who downloads a brochure may only be reading.</p>
+          <div class="table-wrap" style="margin-top:8px"><table>
+            <thead><tr><th>Lead source</th><th class="num">Points</th></tr></thead>
+            <tbody>
+              <tr><td>RFI form (asked us for information)</td><td class="num">100</td></tr>
+              <tr><td>Referral (recommended by a client)</td><td class="num">90</td></tr>
+              <tr><td>Conference (met at our booth)</td><td class="num">60</td></tr>
+              <tr><td>Webinar (attended our session)</td><td class="num">60</td></tr>
+              <tr><td>AD outbound (we contacted them)</td><td class="num">40</td></tr>
+              <tr><td>Content download (white paper, brochure)</td><td class="num">35</td></tr>
+            </tbody></table></div>
+        </div>
+
+        <div class="card">
+          <span class="label">Engagement</span>
+          <p><b>Question:</b> are they actively talking to us right now?</p>
+          <p><b>Why it matters:</b> a perfect-fit company that went silent two months ago is less urgent than one that replied yesterday. Several people engaging from the same company means a buying team is forming.</p>
+          <div class="table-wrap" style="margin-top:8px"><table>
+            <thead><tr><th>Part</th><th>How it scores</th></tr></thead>
+            <tbody>
+              <tr><td>Recency (50%)</td><td>Last touch within 7 days 100, 30 days 60, 60 days 30, older 10</td></tr>
+              <tr><td>Email (30%)</td><td>Replied 100, clicked 67, opened 33, nothing 0</td></tr>
+              <tr><td>Contacts (20%)</td><td>4+ people 100, 3 people 67, 2 people 33, 1 person 0</td></tr>
+            </tbody></table></div>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:14px">
+        <div class="card"><span class="label">Grades</span><ul>
+          <li><span class="chip g-A">A</span> 75+: send to an AD within 24 hours</li>
+          <li><span class="chip g-B">B</span> 60 to 74: targeted nurture (case study, webinar recording, follow-up in 3 days)</li>
+          <li><span class="chip g-C">C</span> under 60: stays in marketing nurture, re-scored monthly</li>
+          <li><span class="chip g-DQ">DQ</span> disqualified: keeps its score, but leaves the active queue</li>
+        </ul></div>
+        <div class="card"><span class="label">Stages</span><ul>
+          <li><b>New:</b> created, not yet contacted</li>
+          <li><b>Working:</b> analyst researching and reaching out</li>
+          <li><b>MQL:</b> marketing qualified, right profile and real interest</li>
+          <li><b>SQL:</b> sales qualified, an AD accepted it and owns it</li>
+          <li><b>RFP:</b> the prospect asked for a proposal</li>
+        </ul></div>
+        <div class="card"><span class="label">Other terms</span><ul>
+          <li><b>SLA breach:</b> a grade A lead still New or Working with no contact for over 24 hours</li>
+          <li><b>DQ reason:</b> why a lead was closed, for example another CRO, in-house team, no budget, duplicate</li>
+          <li><b>Next best action:</b> the rule-based step for each lead, from its grade, stage and source</li>
+          <li><b>Hand-off note:</b> the summary an AD gets so they don't have to redo the research</li>
+        </ul></div>
+      </div>
+
+      <div class="callout"><b>Worked example:</b> an emerging biotech in Europe (fit 100) in Phase II with a Series B last spring (pipeline 100) that filled in an RFI form (intent 100), last contacted 10 days ago with one opened email and one contact (engagement: 60 × 0.5 + 33 × 0.3 + 0 × 0.2 = 40). With default weights: (100 × 30 + 100 × 25 + 100 × 25 + 40 × 20) ÷ 100 = <b>88, grade A</b>. Route it to an AD today.</div>
     </section>
   </div>
 
