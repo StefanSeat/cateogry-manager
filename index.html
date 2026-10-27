@@ -43,7 +43,7 @@
       <div class="demo-note">Demo data: 64 fictional companies, generated for this prototype.</div>
 
       <div class="tiles">
-        <div class="tile"><div class="k">Leads in queue</div><div class="v" id="d-total">0</div><div class="s">last 13 weeks</div></div>
+        <div class="tile"><div class="k">Active leads</div><div class="v" id="d-total">0</div><div class="s"><span id="d-dq">0</span> disqualified, hidden by default</div></div>
         <div class="tile"><div class="k">Grade A (75+)</div><div class="v" id="d-a">0</div><div class="s">route to AD within 24h</div></div>
         <div class="tile"><div class="k">Grade B (60 to 74)</div><div class="v" id="d-b">0</div><div class="s">targeted nurture</div></div>
         <div class="tile"><div class="k">SLA breaches</div><div class="v" id="d-sla">0</div><div class="s">grade A, not worked in 24h</div></div>
@@ -58,14 +58,14 @@
             <label>Intent <span class="sub">lead source</span><input type="range" name="intent" min="0" max="50" value="25"><output id="w-intent">25</output></label>
             <label>Engagement <span class="sub">recency, email, contacts</span><input type="range" name="engagement" min="0" max="50" value="20"><output id="w-engagement">20</output></label>
           </div>
-          <p class="muted" style="margin-top:10px">Score = weighted average of the four factors, 0 to 100. Emerging biotech with a recent funding round and an active Phase I or II program scores highest on fit, because these sponsors outsource most of their development. An RFI form is the strongest intent signal, a content download the weakest. <button class="btn small" id="w-reset">Reset weights</button></p>
+          <p class="muted" style="margin-top:10px">Score = weighted average of the four factors, 0 to 100. Emerging biotech with a recent funding round and an active Phase I or II program scores highest on fit, because these sponsors outsource most of their development. An RFI form is the strongest intent signal, a content download the weakest. The score rates the prospect, not the status: a disqualified lead keeps its score but shows "DQ" and leaves the active queue. <button class="btn small" id="w-reset">Reset weights</button></p>
         </div>
       </details>
 
       <div class="toolbar" style="margin-top:14px">
         <input type="search" id="f-q" placeholder="Search company, area, service..." aria-label="Search leads">
-        <select id="f-grade" aria-label="Grade"><option value="">All grades</option><option value="A">Grade A</option><option value="B">Grade B</option><option value="C">Grade C</option><option value="SLA">SLA breaches</option></select>
-        <select id="f-stage" aria-label="Stage"><option value="">All stages</option></select>
+        <select id="f-grade" aria-label="Grade"><option value="">All grades</option><option value="A">Grade A</option><option value="B">Grade B</option><option value="C">Grade C</option><option value="DQ">Disqualified</option><option value="SLA">SLA breaches</option></select>
+        <select id="f-stage" aria-label="Stage"><option value="active" selected>Active (hide DQ)</option><option value="">All stages</option></select>
         <select id="f-region" aria-label="Region"><option value="">All regions</option></select>
         <select id="f-source" aria-label="Source"><option value="">All sources</option></select>
         <button class="btn" id="export">Export CSV</button>

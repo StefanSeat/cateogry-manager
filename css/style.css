@@ -146,6 +146,9 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .g-C { background: var(--neutral-soft); color: var(--muted); }
 .st { background: var(--neutral-soft); color: var(--text); font-weight: 600; }
 .sla { background: var(--bad-soft); color: var(--bad); }
+.g-DQ { background: var(--neutral-soft); color: var(--muted); }
+tbody tr.dq td { color: var(--muted); }
+tbody tr.dq .scorebar b { background: var(--muted); }
 
 /* Detail panel */
 .detail { position: sticky; top: 64px; scroll-margin-top: 60px; }

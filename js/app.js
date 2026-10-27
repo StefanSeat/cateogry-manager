@@ -26,6 +26,17 @@
     return Math.round((p.fit * weights.fit + p.pipeline * weights.pipeline + p.intent * weights.intent + p.engagement * weights.engagement) / tw * 100);
   }
   function grade(s) { return s >= 75 ? "A" : s >= 60 ? "B" : "C"; }
+  function isDQ(l) { return l.stage === "Disqualified"; }
+  // A disqualified lead keeps its score (it describes the prospect), but loses its grade:
+  // it is out of the working queue until something changes.
+  function label(l) { return isDQ(l) ? "DQ" : grade(score(l)); }
+  var DQ_REASONS = [
+    "Signed an MSA with another CRO for this program",
+    "Running the study with an in-house team",
+    "Program paused, no budget this year",
+    "Duplicate of an existing account in CRM",
+    "Service outside our scope (commercial-stage only)"
+  ];
 
   // Stage history is simulated once with the default weights so the funnel
   // reflects lead quality; changing weights later only re-ranks, it does not rewrite history.
@@ -39,16 +50,22 @@
       st = q > 0.8 ? "RFP" : q > 0.66 ? "SQL" : q > 0.48 ? "MQL" : q > 0.3 ? "Working" : "New";
     }
     l.stage = st;
+    if (st === "Disqualified") l.dqReason = DQ_REASONS[Math.floor(n * 1000) % DQ_REASONS.length];
   });
   var saved = {};
   try { saved = JSON.parse(localStorage.getItem("ada-stages") || "{}"); } catch (e) {}
-  leads.forEach(function (l) { if (saved[l.id] && STAGES.indexOf(saved[l.id]) > -1) l.stage = saved[l.id]; });
+  leads.forEach(function (l) {
+    if (saved[l.id] && STAGES.indexOf(saved[l.id]) > -1) {
+      l.stage = saved[l.id];
+      if (isDQ(l) && !l.dqReason) l.dqReason = "Set manually";
+    }
+  });
 
   function slaBreach(l) { return grade(score(l)) === "A" && (l.stage === "New" || l.stage === "Working") && l.lastTouchDays >= 1; }
 
   function nextAction(l) {
     var g = grade(score(l));
-    if (l.stage === "Disqualified") return "Closed. Keep in marketing database and re-check in 6 months (funding or new trial registration can reopen it).";
+    if (isDQ(l)) return "Out of the queue. Keep the account in the marketing database and re-check in 6 months: new funding or a new trial registration can reopen it.";
     if (l.stage === "RFP") return "RFP in progress. Support the AD: collect protocol synopsis, timelines and budget range, book the bid defense prep, log every touch in CRM.";
     if (l.stage === "SQL") return "Accepted by sales. Confirm the AD has a discovery call booked and the opportunity is created with service line and expected RFP date.";
     if (l.source === "RFI form" && (l.stage === "New" || l.stage === "Working")) return "Inbound RFI: respond within 24 hours, qualify scope and timing, then hand off to the AD the same day.";
@@ -132,7 +149,7 @@
 
   // ---------- Lead desk ----------
   var sortKey = "score", sortDir = -1, selected = null;
-  var f = { q: "", grade: "", stage: "", region: "", source: "" };
+  var f = { q: "", grade: "", stage: "active", region: "", source: "" };
 
   function fillSelect(id, values) {
     var s = $(id);
@@ -148,8 +165,9 @@
       var s = score(l);
       if (q && (l.company + " " + l.area + " " + l.service + " " + l.contact + " " + l.id).toLowerCase().indexOf(q) < 0) return false;
       if (f.grade === "SLA") { if (!slaBreach(l)) return false; }
-      else if (f.grade && grade(s) !== f.grade) return false;
-      if (f.stage && l.stage !== f.stage) return false;
+      else if (f.grade && label(l) !== f.grade) return false;
+      if (f.stage === "active") { if (isDQ(l)) return false; }
+      else if (f.stage && l.stage !== f.stage) return false;
       if (f.region && l.region !== f.region) return false;
       if (f.source && l.source !== f.source) return false;
       return true;
@@ -165,16 +183,18 @@
       else { va = a.l[sortKey]; vb = b.l[sortKey]; }
       return va < vb ? -sortDir : va > vb ? sortDir : 0;
     });
-    var all = leads.map(score);
-    $("#d-total").textContent = leads.length;
-    $("#d-a").textContent = all.filter(function (s) { return grade(s) === "A"; }).length;
-    $("#d-b").textContent = all.filter(function (s) { return grade(s) === "B"; }).length;
+    var active = leads.filter(function (l) { return !isDQ(l); });
+    $("#d-total").textContent = active.length;
+    $("#d-dq").textContent = leads.length - active.length;
+    $("#d-a").textContent = active.filter(function (l) { return label(l) === "A"; }).length;
+    $("#d-b").textContent = active.filter(function (l) { return label(l) === "B"; }).length;
     $("#d-sla").textContent = leads.filter(slaBreach).length;
     $("#d-count").textContent = rows.length + " of " + leads.length + " leads";
 
     $("#lead-body").innerHTML = rows.map(function (r) {
-      var l = r.l, g = grade(r.s);
-      return '<tr data-id="' + l.id + '"' + (selected === l.id ? ' class="sel"' : "") + ">" +
+      var l = r.l, g = label(l);
+      var cls = (selected === l.id ? "sel" : "") + (isDQ(l) ? " dq" : "");
+      return '<tr data-id="' + l.id + '"' + (cls.trim() ? ' class="' + cls.trim() + '"' : "") + (isDQ(l) ? ' title="' + esc(l.dqReason) + '"' : "") + ">" +
         '<td><div class="co">' + esc(l.company) + '</div><div class="sub">' + esc(l.contact) + "</div></td>" +
         '<td class="num"><span class="scorebar"><i><b style="width:' + r.s + '%"></b></i>' + r.s + "</span></td>" +
         '<td><span class="chip g-' + g + '">' + g + "</span>" + (slaBreach(l) ? ' <span class="chip sla" title="Grade A lead not worked within 24 hours">SLA</span>' : "") + "</td>" +
@@ -189,26 +209,30 @@
     var box = $("#detail");
     var l = leads.filter(function (x) { return x.id === selected; })[0];
     if (!l) { box.innerHTML = '<div class="empty">Select a lead to see its score breakdown, next best action and a hand-off note for the AD.</div>'; return; }
-    var p = parts(l), s = score(l), g = grade(s);
+    var p = parts(l), s = score(l), g = label(l);
     var opts = STAGES.map(function (st) { return "<option" + (st === l.stage ? " selected" : "") + ">" + st + "</option>"; }).join("");
     box.innerHTML =
       '<div style="display:flex;justify-content:space-between;gap:8px;align-items:start"><div><h3>' + esc(l.company) + '</h3><div class="sub">' + l.id + " | " + esc(l.contact) + '</div></div><span class="chip g-' + g + '" style="font-size:.9rem">' + s + " " + g + "</span></div>" +
       '<dl class="kv"><dt>Type</dt><dd>' + esc(l.type) + "</dd><dt>Region</dt><dd>" + l.region + "</dd><dt>Area</dt><dd>" + esc(l.area) + " | " + l.phase + "</dd>" +
       "<dt>Interest</dt><dd>" + esc(l.service) + "</dd><dt>Funding</dt><dd>" + (l.funded ? l.round + " (last 12 months)" : "No recent round") + "</dd>" +
-      "<dt>Source</dt><dd>" + esc(l.source) + "</dd><dt>Stage</dt><dd><select id=\"stage-sel\" aria-label=\"Stage\">" + opts + "</select></dd></dl>" +
+      "<dt>Source</dt><dd>" + esc(l.source) + "</dd><dt>Stage</dt><dd><select id=\"stage-sel\" aria-label=\"Stage\">" + opts + "</select></dd>" +
+      (isDQ(l) ? "<dt>DQ reason</dt><dd>" + esc(l.dqReason) + "</dd>" : "") + "</dl>" +
+      (isDQ(l) ? '<p class="muted">Score ' + s + " still shows how good this prospect looks on paper. The DQ reason above is something the score cannot see, so the lead leaves the active queue.</p>" : "") +
       '<div class="breakdown">' + ["fit", "pipeline", "intent", "engagement"].map(function (k) {
         var v = Math.round(p[k] * 100);
         return '<div class="row"><span>' + { fit: "Company fit", pipeline: "Pipeline & funding", intent: "Intent", engagement: "Engagement" }[k] + ' <span class="sub">(' + weights[k] + ")</span></span><div class=\"bar\"><b style=\"width:" + v + '%"></b></div><span>' + v + "</span></div>";
       }).join("") + "</div>" +
       '<div class="nba"><strong>Next best action</strong>' + esc(nextAction(l)) + "</div>" +
+      (isDQ(l) ? "" :
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><span class="label" style="margin:0">Hand-off note</span><button class="btn small" id="copy-note">Copy</button></div>' +
-      '<textarea class="note" id="note" aria-label="Hand-off note">' + esc(handoff(l)) + "</textarea>";
+      '<textarea class="note" id="note" aria-label="Hand-off note">' + esc(handoff(l)) + "</textarea>");
     $("#stage-sel").addEventListener("change", function (e) {
       l.stage = e.target.value; saved[l.id] = l.stage;
+      if (isDQ(l) && !l.dqReason) l.dqReason = "Set manually";
       try { localStorage.setItem("ada-stages", JSON.stringify(saved)); } catch (err) {}
       renderDesk();
     });
-    $("#copy-note").addEventListener("click", function (e) { copy($("#note").value, e.target); });
+    if ($("#copy-note")) $("#copy-note").addEventListener("click", function (e) { copy($("#note").value, e.target); });
   }
 
   $("#lead-body").addEventListener("click", function (e) {
@@ -243,7 +267,7 @@
     var head = ["id", "company", "contact", "type", "region", "area", "phase", "service", "source", "stage", "score", "grade", "last_touch_days", "next_action"];
     var lines = [head.join(",")].concat(filtered().map(function (l) {
       var s = score(l);
-      return [l.id, l.company, l.contact, l.type, l.region, l.area, l.phase, l.service, l.source, l.stage, s, grade(s), l.lastTouchDays, nextAction(l)]
+      return [l.id, l.company, l.contact, l.type, l.region, l.area, l.phase, l.service, l.source, l.stage, s, label(l), l.lastTouchDays, isDQ(l) ? l.dqReason : nextAction(l)]
         .map(function (v) { return '"' + String(v).replace(/"/g, '""') + '"'; }).join(",");
     }));
     var blob = new Blob([lines.join("\n")], { type: "text/csv" });
