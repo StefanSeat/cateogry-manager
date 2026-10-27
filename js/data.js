@@ -24,7 +24,7 @@
   var areas = [["Oncology", 30], ["Rare disease", 16], ["Infectious disease", 14], ["CNS", 14], ["Immunology", 13], ["Cardiometabolic", 13]];
   var phases = [["Preclinical", 20], ["Phase I", 30], ["Phase II", 30], ["Phase III", 20]];
   var services = ["Clinical trial support", "Regulatory affairs", "Preclinical studies", "Data management", "Central lab"];
-  var sources = [["Webinar", 24], ["Content download", 22], ["RFI form", 12], ["Conference", 14], ["ADR outbound", 18], ["Referral", 14]];
+  var sources = [["Webinar", 24], ["Content download", 22], ["RFI form", 12], ["Conference", 14], ["AD outbound", 18], ["Referral", 14]];
   var rounds = ["Seed", "Series A", "Series B", "Series C", "IPO"];
 
   var used = {};

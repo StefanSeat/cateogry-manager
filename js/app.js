@@ -8,7 +8,7 @@
   var weights = { fit: 30, pipeline: 25, intent: 25, engagement: 20 };
   var TYPE = { "Emerging biotech": 1, "Mid-size biopharma": 0.9, "Large pharma": 0.6, "Medical device": 0.5, "Academic / NIH": 0.3 };
   var PHASE = { "Preclinical": 0.5, "Phase I": 0.8, "Phase II": 1, "Phase III": 0.9 };
-  var SOURCE = { "RFI form": 1, "Referral": 0.9, "Conference": 0.6, "Webinar": 0.6, "ADR outbound": 0.4, "Content download": 0.35 };
+  var SOURCE = { "RFI form": 1, "Referral": 0.9, "Conference": 0.6, "Webinar": 0.6, "AD outbound": 0.4, "Content download": 0.35 };
   var REGION = { "North America": 1, "Europe": 1, "APAC": 0.8, "LATAM": 0.7 };
 
   function parts(l) {
@@ -49,10 +49,10 @@
   function nextAction(l) {
     var g = grade(score(l));
     if (l.stage === "Disqualified") return "Closed. Keep in marketing database and re-check in 6 months (funding or new trial registration can reopen it).";
-    if (l.stage === "RFP") return "RFP in progress. Support the ADR: collect protocol synopsis, timelines and budget range, book the bid defense prep, log every touch in CRM.";
-    if (l.stage === "SQL") return "Accepted by sales. Confirm the ADR has a discovery call booked and the opportunity is created with service line and expected RFP date.";
-    if (l.source === "RFI form" && (l.stage === "New" || l.stage === "Working")) return "Inbound RFI: respond within 24 hours, qualify scope and timing, then hand off to the ADR the same day.";
-    if (g === "A") return "Hot lead. Route to the ADR today with a hand-off note and suggest a discovery call this week (SLA: 24 hours).";
+    if (l.stage === "RFP") return "RFP in progress. Support the AD: collect protocol synopsis, timelines and budget range, book the bid defense prep, log every touch in CRM.";
+    if (l.stage === "SQL") return "Accepted by sales. Confirm the AD has a discovery call booked and the opportunity is created with service line and expected RFP date.";
+    if (l.source === "RFI form" && (l.stage === "New" || l.stage === "Working")) return "Inbound RFI: respond within 24 hours, qualify scope and timing, then hand off to the AD the same day.";
+    if (g === "A") return "Hot lead. Route to the AD today with a hand-off note and suggest a discovery call this week (SLA: 24 hours).";
     if (g === "B" && l.source === "Webinar") return "Send the webinar recording plus one " + l.area.toLowerCase() + " case study. Follow up in 3 business days.";
     if (g === "B") return "Nurture: 3-touch sequence on " + l.service.toLowerCase() + " for " + l.phase + " sponsors. Re-score after 14 days.";
     return "Keep in marketing nurture. Re-score monthly; watch for funding news or a new trial on ClinicalTrials.gov.";
@@ -71,7 +71,7 @@
     if (l.email >= 2) why.push("clicked or replied to outreach");
     return [
       "HAND-OFF: " + l.company + " (" + l.id + ")",
-      "To: ADR, " + l.region,
+      "To: AD, " + l.region,
       "",
       "Contact: " + l.contact,
       "Profile: " + l.type + " | " + l.area + " | " + l.phase,
@@ -188,7 +188,7 @@
   function renderDetail() {
     var box = $("#detail");
     var l = leads.filter(function (x) { return x.id === selected; })[0];
-    if (!l) { box.innerHTML = '<div class="empty">Select a lead to see its score breakdown, next best action and a hand-off note for the ADR.</div>'; return; }
+    if (!l) { box.innerHTML = '<div class="empty">Select a lead to see its score breakdown, next best action and a hand-off note for the AD.</div>'; return; }
     var p = parts(l), s = score(l), g = grade(s);
     var opts = STAGES.map(function (st) { return "<option" + (st === l.stage ? " selected" : "") + ">" + st + "</option>"; }).join("");
     box.innerHTML =
@@ -335,7 +335,7 @@
       srcs.map(function (s) { return "  " + (s.k + ":                ").slice(0, 18) + s.rate + "% of " + s.n + " leads, " + s.rfp + " RFPs"; }).join("\n"),
       "",
       "ACTIONS",
-      "  1. Clear SLA breaches today and hand off to ADRs with notes.",
+      "  1. Clear SLA breaches today and hand off to ADs with notes.",
       "  2. Re-engage " + stuck + " stalled MQLs with a case study from " + areas[0].a.toLowerCase() + ".",
       "  3. Ask Marketing for more " + best.k.toLowerCase() + " volume; review " + worst.k.toLowerCase() + " targeting."
     ].join("\n");
